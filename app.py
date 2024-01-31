@@ -22,3 +22,7 @@ def players():
 @app.route("/player")
 def player():
     return render_template("player.html")
+
+@app.route("/shots")
+def shots():
+    return render_template("shots.html")

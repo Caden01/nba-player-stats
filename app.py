@@ -27,6 +27,6 @@ def player():
 def shots():
     return render_template("shots.html")
 
-@app.route("/favorite")
-def favorite_players():
-    return render_template("favorite.html")
+@app.route("/profile")
+def profile():
+    return render_template("profile.html")

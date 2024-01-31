@@ -18,3 +18,7 @@ def playoffs():
 @app.route("/players")
 def players():
     return render_template("players.html")
+
+@app.route("/player")
+def player():
+    return render_template("player.html")

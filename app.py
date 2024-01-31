@@ -10,3 +10,11 @@ def homepage():
 @app.route("/season")
 def season():
     return render_template("season.html")
+
+@app.route("/playoffs")
+def playoffs():
+    return render_template("playoffs.html")
+
+@app.route("/players")
+def players():
+    return render_template("players.html")

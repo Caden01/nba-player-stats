@@ -10,23 +10,44 @@ with app.app_context():
     response = requests.get("https://nba-stats-db.herokuapp.com/api/playerdata/season/2023")
     results = response.json()["results"]
 
+
     teams = []
     seasons = []
 
     for result in results:
 
 
-        player = Players(name = result["player_name"])
+        player = Players(
+            id = result["player_name"],
+            name = result["player_name"]
+            )
 
         if result["team"] not in teams:
             teams.append(result["team"])
-            team = Teams(name = result["team"])
+            team = Teams(
+                id = result["team"],
+                name = result["team"]
+                )
          
-        if result["team"] not in seasons:
+        if result["season"] not in seasons:
             seasons.append(result["season"])
-            tournament = Tournaments(year = result["season"])
+            tournament = Tournaments(
+                id = result["season"],
+                year = result["season"]
+                )
 
+
+
+        db.session.add(player)
+        db.session.add(team)
+        db.session.add(tournament)
+
+
+    for result in results:
         statistic = Statistics(
+            player_id = Players.query.get_or_404(result["player_name"]).id, 
+            team_id = Teams.query.get_or_404(result["team"]).id,
+            tournament_id = Tournaments.query.get_or_404(result["season"]).id,
             games = result["games"],
             games_started = result["games_started"],
             minutes_played = result["minutes_played"], 
@@ -54,9 +75,6 @@ with app.app_context():
             points = result["PTS"],
         )
 
-
-        db.session.add(player)
-        db.session.add(team)
-        db.session.add(tournament)
         db.session.add(statistic)
+
     db.session.commit()

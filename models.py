@@ -9,7 +9,7 @@ class Players(db.Model):
 
     __tablename__ = "players"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Text, primary_key=True, unique=True)
     name = db.Column(db.Text)
 
     # statistic = db.relationship("Statistics", backref="players")
@@ -19,7 +19,7 @@ class Teams(db.Model):
 
     __tablename__ = "teams"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Text, primary_key=True, unique=True)
     name = db.Column(db.Text)
 
     # statistic = db.relationship("Statistics", backref="teams")
@@ -29,7 +29,7 @@ class Tournaments(db.Model):
 
     __tablename__ = "tournaments" 
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Text, primary_key=True, unique=True)
     year = db.Column(db.Integer)
 
     # statistic = db.relationship("Statistics", backref="tournaments")
@@ -40,9 +40,9 @@ class Statistics(db.Model):
     __tablename__ = "statistics"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    player_id = db.Column(db.Integer, db.ForeignKey("players.id", ondelete="cascade"), primary_key=True)
-    team_id = db.Column(db.Integer, db.ForeignKey("teams.id", ondelete="cascade"), primary_key=True)
-    tounament_id = db.Column(db.Integer, db.ForeignKey("tournaments.id", ondelete="cascade"), primary_key=True)
+    player_id = db.Column(db.Text, db.ForeignKey("players.id", ondelete="cascade"), primary_key=True)
+    team_id = db.Column(db.Text, db.ForeignKey("teams.id", ondelete="cascade"), primary_key=True)
+    tournament_id = db.Column(db.Text, db.ForeignKey("tournaments.id", ondelete="cascade"), primary_key=True)
     games = db.Column(db.Integer)
     games_started = db.Column(db.Integer)
     minutes_played = db.Column(db.Integer)

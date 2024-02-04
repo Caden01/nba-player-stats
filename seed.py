@@ -48,6 +48,7 @@ with app.app_context():
             player_id = Players.query.get_or_404(result["player_name"]).id, 
             team_id = Teams.query.get_or_404(result["team"]).id,
             tournament_id = Tournaments.query.get_or_404(result["season"]).id,
+            age = result["age"],
             games = result["games"],
             games_started = result["games_started"],
             minutes_played = result["minutes_played"], 

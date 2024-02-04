@@ -40,9 +40,10 @@ class Statistics(db.Model):
     __tablename__ = "statistics"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    player_id = db.Column(db.Text, db.ForeignKey("players.id", ondelete="cascade"), primary_key=True)
-    team_id = db.Column(db.Text, db.ForeignKey("teams.id", ondelete="cascade"), primary_key=True)
-    tournament_id = db.Column(db.Text, db.ForeignKey("tournaments.id", ondelete="cascade"), primary_key=True)
+    player_id = db.Column(db.Text, db.ForeignKey("players.id", ondelete="cascade"))
+    team_id = db.Column(db.Text, db.ForeignKey("teams.id", ondelete="cascade"))
+    tournament_id = db.Column(db.Text, db.ForeignKey("tournaments.id", ondelete="cascade"))
+    age = db.Column(db.Integer)
     games = db.Column(db.Integer)
     games_started = db.Column(db.Integer)
     minutes_played = db.Column(db.Integer)

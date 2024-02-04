@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="p-3 pb-md-4 mx-auto text-center">
-        <h1 class="display-2"><a href="/player" class="text-reset text-decoration-none">Player Name</a></h1>
+        <h1 class="display-2"><a href="/player" class="text-reset text-decoration-none">{{ player.player_id }}</a></h1>
     </div>
 
     <div class="container">
@@ -24,7 +24,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Age</div>
                     <div class="card-body">
-                      <h5 class="card-title">25</h5>
+                      <h5 class="card-title">{{ player.age }}</h5>
                     </div>
                   </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Games Played</div>
                     <div class="card-body">
-                      <h5 class="card-title">205</h5>
+                      <h5 class="card-title">{{ player.games }}</h5>
                     </div>
                   </div>
             </div>
@@ -40,7 +40,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Minutes Played</div>
                     <div class="card-body">
-                      <h5 class="card-title">20,000</h5>
+                      <h5 class="card-title">{{ player.minutes_played }}</h5>
                     </div>
                   </div>
             </div>
@@ -48,7 +48,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Points</div>
                     <div class="card-body">
-                      <h5 class="card-title">2,000</h5>
+                      <h5 class="card-title">{{ player.points }}</h5>
                     </div>
                   </div>
             </div>
@@ -56,7 +56,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Assists</div>
                     <div class="card-body">
-                      <h5 class="card-title">500</h5>
+                      <h5 class="card-title">{{ player.assists }}</h5>
                     </div>
                   </div>
             </div>
@@ -64,7 +64,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Blocks</div>
                     <div class="card-body">
-                      <h5 class="card-title">50</h5>
+                      <h5 class="card-title">{{ player.blocks }}</h5>
                     </div>
                   </div>
             </div>
@@ -72,7 +72,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Steals</div>
                     <div class="card-body">
-                      <h5 class="card-title">15</h5>
+                      <h5 class="card-title">{{ player.steals }}</h5>
                     </div>
                   </div>
             </div>
@@ -80,15 +80,15 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Turn Overs</div>
                     <div class="card-body">
-                      <h5 class="card-title">30</h5>
+                      <h5 class="card-title">{{ player.tov }}</h5>
                     </div>
                   </div>
             </div>
             <div class="col">
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                    <div class="card-header">Fouls</div>
+                    <div class="card-header">Effective FG %</div>
                     <div class="card-body">
-                      <h5 class="card-title">80</h5>
+                      <h5 class="card-title">{{ percent }}%</h5>
                     </div>
                   </div>
             </div>
@@ -96,7 +96,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Rebounds</div>
                     <div class="card-body">
-                      <h5 class="card-title">300</h5>
+                      <h5 class="card-title">{{ player.trb }}</h5>
                     </div>
                   </div>
             </div>
@@ -104,7 +104,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Offensive Rebounds</div>
                     <div class="card-body">
-                      <h5 class="card-title">100</h5>
+                      <h5 class="card-title">{{ player.orb }}</h5>
                     </div>
                   </div>
             </div>
@@ -112,7 +112,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Defensive Rebounds</div>
                     <div class="card-body">
-                      <h5 class="card-title">200</h5>
+                      <h5 class="card-title">{{ player.drb }}</h5>
                     </div>
                   </div>
             </div>

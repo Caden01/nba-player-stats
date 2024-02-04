@@ -30,9 +30,14 @@ def playoffs():
 def players():
     return render_template("players.html")
 
-@app.route("/player")
-def player():
-    return render_template("player.html")
+@app.route("/player/<int:player_id>")
+def player(player_id):
+    """Show specif player stats"""
+    
+    player = Statistics.query.get_or_404(player_id)
+    percent = float(player.effect_fg_percent) * 100
+
+    return render_template("player.html", player=player, percent=percent)
 
 @app.route("/shots")
 def shots():

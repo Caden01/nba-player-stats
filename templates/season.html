@@ -21,11 +21,34 @@
             </div>
             <div class="col">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">An item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A second item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A third item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A fourth item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">And a fifth one</a></li>
+                    {% for stat in stats %}
+                    <li class="list-group-item"><a href="/player/{{stat.player_id}}" class="text-reset text-decoration-none">
+                        <div class="container d-flex justify-content-between align-items-center">
+                            <div class="" >
+                                {{ stat.player_id }}
+                            </div>
+                        </a>
+                            <div class="d-flex">
+                                <div class="text-center me-4">
+                                    <p>Games</p>
+                                    <p>{{ stat.games }}</p>
+                                </div>
+                                <div class="text-center me-4">
+                                    <p>Points</p>
+                                    <p>{{ stat.points }}</p>
+                                </div>
+                                <div class="text-center me-4">
+                                    <p>Assists</p>
+                                    <p>{{ stat.assists }}</p>
+                                </div>
+                                <div class="text-center">
+                                    <p>Rebounds</p>
+                                    <p>{{ stat.trb }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

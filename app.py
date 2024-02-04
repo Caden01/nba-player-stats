@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect
-from models import db, connect_db
+from models import db, connect_db, Players, Tournaments, Teams, Statistics
 
 app = Flask(__name__)
 
@@ -15,7 +15,12 @@ def homepage():
 
 @app.route("/season")
 def season():
-    return render_template("season.html")
+    """Show all players with their season stats"""
+
+    players = Players.query.all()
+    stats = Statistics.query.all()
+
+    return render_template("season.html", players=players, stats=stats)
 
 @app.route("/playoffs")
 def playoffs():

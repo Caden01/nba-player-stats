@@ -12,32 +12,26 @@
         <div class="row align-items-center">
             <div class="col">
                 <h4 class="text-decoration-underline"><a href="" class="text-reset text-decoration-none">Scorers</a></h4>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="/player" class="text-reset text-decoration-none">An item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A second item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A third item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A fourth item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">And a fifth one</a></li>
+                <ul class="list-group list-group-flush" style="height: 200px; overflow-y: auto;">
+                    {% for point in points %}
+                        <li class="list-group-item d-flex justify-content-between"><a href="/player/{{ point.players.id }}" class="text-reset text-decoration-none">{{ point.players.name }}</a><p>{{ point.points }}</p></li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="col">
                 <h4 class="text-decoration-underline"><a href="#" class="text-reset text-decoration-none">Assists</a></h4>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">An item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A second item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A third item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A fourth item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">And a fifth one</a></li>
+                <ul class="list-group list-group-flush" style="height: 200px; overflow-y: auto;">
+                    {% for assist in assists %}
+                        <li class="list-group-item d-flex justify-content-between"><a href="/player/{{ assist.players.id }}" class="text-reset text-decoration-none">{{ assist.players.name }}</a><p>{{ assist.assists }}</p></li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="col">
                 <h4 class="text-decoration-underline"><a href="" class="text-reset text-decoration-none">Rebounders</a></h4>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">An item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A second item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A third item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A fourth item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">And a fifth one</a></li>
+                <ul class="list-group list-group-flush" style="height: 200px; overflow-y: auto;">
+                    {% for rebound in rebounds %}
+                        <li class="list-group-item d-flex justify-content-between"><a href="/player/{{ rebound.players.id }}" class="text-reset text-decoration-none">{{ rebound.players.name }}</a><p>{{ rebound.trb }}</p></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

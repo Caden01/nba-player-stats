@@ -11,7 +11,13 @@ connect_db(app)
 
 @app.route("/")
 def homepage():
-    return render_template("index.html")
+    """Show top scorers, assissts, rebounds"""
+
+    points = db.session.execute(db.select(Statistics).order_by(Statistics.points.desc())).scalars()
+    assists = db.session.execute(db.select(Statistics).order_by(Statistics.assists.desc())).scalars()
+    rebounds = db.session.execute(db.select(Statistics).order_by(Statistics.trb.desc())).scalars()
+
+    return render_template("index.html", points=points, assists=assists, rebounds=rebounds)
 
 @app.route("/season")
 def season():
@@ -41,7 +47,7 @@ def player(player_id):
     player =  Statistics.query.filter_by(player_id=player_id).first_or_404()
     players = Players.query.all()
     tournaments = Tournaments.query.all()
-    percent = float(player.effect_fg_percent) * 100
+    percent = round(float(player.effect_fg_percent) * 100, 1)
 
     return render_template("player.html", player=player, players=players, tournaments=tournaments, percent=percent)
 

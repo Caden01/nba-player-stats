@@ -13,7 +13,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ player.players.name }}
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" style="max-height: 500px; overflow-y: auto;">
                   {% for player in players %}
                     <li><a class="dropdown-item" href="/player/{{ player.id }}" aria-current="true">{{ player.name }}</a></li>
                   {% endfor %}
@@ -23,9 +23,11 @@
                 <button type="button" class="btn btn-primary dropdown-toggle mb-4" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ player.tournaments.year }}
                 </button>
-                {% for tournament in tournaments %}
-                    <li><a class="dropdown-item" href="/player/{{ player.id }}">{{ tournament.year }}</a></li>
-                {% endfor %}
+                <ul class="dropdown-menu" style="max-height: 500px; overflow-y: auto;">
+                  {% for tournament in tournaments %}
+                      <li><a class="dropdown-item" href="/player/{{ player.id }}">{{ tournament.year }}</a></li>
+                  {% endfor %}
+                </ul>
             </div>
         </div>
 

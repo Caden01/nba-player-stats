@@ -45,9 +45,20 @@ def player(player_id):
 
     return render_template("player.html", player=player, players=players, tournaments=tournaments, percent=percent)
 
-@app.route("/shots")
-def shots():
-    return render_template("shots.html")
+@app.route("/shots/<player_id>")
+def shots(player_id):
+    """Show shot statistics for a specific player"""
+
+    stats =  Statistics.query.filter_by(player_id=player_id).first_or_404()
+    players = Players.query.all()
+    tournaments = Tournaments.query.all()
+    field_percent = round(float(stats.field_percent) * 100, 1)
+    three_percent = round(float(stats.three_percent) * 100, 1)
+    two_percent = round(float(stats.two_percent) * 100, 1)
+    ft_percent = round(float(stats.ft_percent) * 100, 1)
+
+
+    return render_template("shots.html", stats=stats, players=players, tournaments=tournaments, field_percent=field_percent, three_percent=three_percent, two_percent=two_percent, ft_percent=ft_percent)
 
 @app.route("/profile")
 def profile():

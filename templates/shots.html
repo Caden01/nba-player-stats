@@ -6,16 +6,28 @@
     <div class="p-3 pb-md-4 mx-auto text-center">
         <h1 class="display-2"><a href="/shots" class="text-reset text-decoration-none">Shot Stats</a></h1>
     </div>
-
+    
     <div class="container">
         <div class="row align-items-center gap-2">
-            <div class="d-grid gap-2">
+            <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Player
+                    {{ stats.players.name }}
                 </button>
+                <ul class="dropdown-menu" style="max-height: 500px; overflow-y: auto;">
+                  {% for player in players %}
+                    <li><a class="dropdown-item" href="/shots/{{ player.id }}" aria-current="true">{{ player.name }}</a></li>
+                  {% endfor %}
+                </ul>
+            </div>
+            <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle mb-4" data-bs-toggle="dropdown" aria-expanded="false">
-                    Season
+                    {{ stats.tournaments.year }}
                 </button>
+                <ul class="dropdown-menu" style="max-height: 500px; overflow-y: auto;">
+                  {% for tournament in tournaments %}
+                      <li><a class="dropdown-item" href="/shots/{{ tournament.year }}">{{ tournament.year }}</a></li>
+                  {% endfor %}
+                </ul>
             </div>
         </div>
 
@@ -24,7 +36,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Field Goals Made</div>
                     <div class="card-body">
-                      <h5 class="card-title">345</h5>
+                      <h5 class="card-title">{{ stats.field_goals }}</h5>
                     </div>
                   </div>
             </div>
@@ -32,7 +44,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Field Goal Attemps</div>
                     <div class="card-body">
-                      <h5 class="card-title">45</h5>
+                      <h5 class="card-title">{{ stats.field_attempts }}</h5>
                     </div>
                   </div>
             </div>
@@ -40,7 +52,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Field Goal %</div>
                     <div class="card-body">
-                      <h5 class="card-title">45%</h5>
+                      <h5 class="card-title">{{ field_percent }}%</h5>
                     </div>
                   </div>
             </div>
@@ -48,7 +60,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Three Pointers Made</div>
                     <div class="card-body">
-                      <h5 class="card-title">32</h5>
+                      <h5 class="card-title">{{ stats.three_fg }}</h5>
                     </div>
                   </div>
             </div>
@@ -56,7 +68,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Three Pointe Attemps</div>
                     <div class="card-body">
-                      <h5 class="card-title">300</h5>
+                      <h5 class="card-title">{{ stats.three_attempts }}</h5>
                     </div>
                   </div>
             </div>
@@ -64,7 +76,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Three Pointer %</div>
                     <div class="card-body">
-                      <h5 class="card-title">10%</h5>
+                      <h5 class="card-title">{{ three_percent }}%</h5>
                     </div>
                   </div>
             </div>
@@ -72,7 +84,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Two Pointer Made</div>
                     <div class="card-body">
-                      <h5 class="card-title">1,000</h5>
+                      <h5 class="card-title">{{ stats.two_fg }}</h5>
                     </div>
                   </div>
             </div>
@@ -80,7 +92,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Two Pointer Attemps</div>
                     <div class="card-body">
-                      <h5 class="card-title">2,000</h5>
+                      <h5 class="card-title">{{ stats.two_attempts }}</h5>
                     </div>
                   </div>
             </div>
@@ -88,7 +100,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Two Pointer %</div>
                     <div class="card-body">
-                      <h5 class="card-title">50%</h5>
+                      <h5 class="card-title">{{ two_percent }}%</h5>
                     </div>
                   </div>
             </div>
@@ -96,7 +108,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Free Throws Made</div>
                     <div class="card-body">
-                      <h5 class="card-title">8</h5>
+                      <h5 class="card-title">{{ stats.ft }}</h5>
                     </div>
                   </div>
             </div>
@@ -104,7 +116,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Free Throw Attemps</div>
                     <div class="card-body">
-                      <h5 class="card-title">10</h5>
+                      <h5 class="card-title">{{ stats.ft_attempts }}</h5>
                     </div>
                   </div>
             </div>
@@ -112,7 +124,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Free Throw %</div>
                     <div class="card-body">
-                      <h5 class="card-title">80%</h5>
+                      <h5 class="card-title">{{ ft_percent }}%</h5>
                     </div>
                   </div>
             </div>

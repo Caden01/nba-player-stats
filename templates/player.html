@@ -4,18 +4,28 @@
 
 {% block content %}
     <div class="p-3 pb-md-4 mx-auto text-center">
-        <h1 class="display-2"><a href="/player" class="text-reset text-decoration-none">{{ player.player_id }}</a></h1>
+        <h1 class="display-2"><a href="/player" class="text-reset text-decoration-none">{{ player.players.id }}</a></h1>
     </div>
 
     <div class="container">
         <div class="row align-items-center gap-2">
-            <div class="d-grid gap-2">
+            <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Player
+                    {{ player.players.name }}
                 </button>
+                <ul class="dropdown-menu">
+                  {% for player in players %}
+                    <li><a class="dropdown-item" href="/player/{{ player.id }}" aria-current="true">{{ player.name }}</a></li>
+                  {% endfor %}
+                </ul>
+            </div>
+            <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle mb-4" data-bs-toggle="dropdown" aria-expanded="false">
-                    Season
+                    {{ player.tournaments.year }}
                 </button>
+                {% for tournament in tournaments %}
+                    <li><a class="dropdown-item" href="/player/{{ player.id }}">{{ tournament.year }}</a></li>
+                {% endfor %}
             </div>
         </div>
 
@@ -24,7 +34,7 @@
                 <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">Age</div>
                     <div class="card-body">
-                      <h5 class="card-title">{{ player.age }}</h5>
+                      <h5 class="card-title">{{ player.players.age }}</h5>
                     </div>
                   </div>
             </div>

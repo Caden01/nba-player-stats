@@ -11,11 +11,9 @@
         <div class="row align-items-center">
             <div class="col">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">An item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A second item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A third item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A fourth item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">And a fifth one</a></li>
+                    {% for player in players %}
+                        <li class="list-group-item"><a href="player/{{ player.id }}" class="text-reset text-decoration-none">{{ player.name }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

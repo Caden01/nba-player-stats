@@ -28,7 +28,11 @@ def playoffs():
 
 @app.route("/players")
 def players():
-    return render_template("players.html")
+    """List of all players"""
+
+    players = Players.query.all()
+
+    return render_template("players.html", players=players)
 
 @app.route("/player/<player_id>")
 def player(player_id):

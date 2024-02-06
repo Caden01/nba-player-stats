@@ -19,7 +19,8 @@ with app.app_context():
 
         player = Players(
             id = result["player_name"],
-            name = result["player_name"]
+            name = result["player_name"],
+            age = result["age"]
             )
 
         if result["team"] not in teams:
@@ -36,19 +37,10 @@ with app.app_context():
                 year = result["season"]
                 )
 
-
-
-        db.session.add(player)
-        db.session.add(team)
-        db.session.add(tournament)
-
-
-    for result in results:
         statistic = Statistics(
-            player_id = Players.query.get_or_404(result["player_name"]).id, 
-            team_id = Teams.query.get_or_404(result["team"]).id,
-            tournament_id = Tournaments.query.get_or_404(result["season"]).id,
-            age = result["age"],
+            player_id = player.id, 
+            team_id = team.id, 
+            tournament_id = tournament.id, 
             games = result["games"],
             games_started = result["games_started"],
             minutes_played = result["minutes_played"], 
@@ -76,6 +68,10 @@ with app.app_context():
             points = result["PTS"],
         )
 
+
+        db.session.add(player)
+        db.session.add(team)
+        db.session.add(tournament)
         db.session.add(statistic)
 
     db.session.commit()

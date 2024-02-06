@@ -11,8 +11,9 @@ class Players(db.Model):
 
     id = db.Column(db.Text, primary_key=True, unique=True)
     name = db.Column(db.Text)
+    age = db.Column(db.Integer)
 
-    # statistic = db.relationship("Statistics", backref="players")
+    statistic = db.relationship("Statistics", backref="players")
 
 class Teams(db.Model):
     """Teams model"""
@@ -22,7 +23,7 @@ class Teams(db.Model):
     id = db.Column(db.Text, primary_key=True, unique=True)
     name = db.Column(db.Text)
 
-    # statistic = db.relationship("Statistics", backref="teams")
+    statistic = db.relationship("Statistics", backref="teams")
 
 class Tournaments(db.Model):
     """Tournaments model"""
@@ -32,7 +33,7 @@ class Tournaments(db.Model):
     id = db.Column(db.Text, primary_key=True, unique=True)
     year = db.Column(db.Integer)
 
-    # statistic = db.relationship("Statistics", backref="tournaments")
+    statistic = db.relationship("Statistics", backref="tournaments")
 
 class Statistics(db.Model):
     """Statistics model"""
@@ -43,7 +44,6 @@ class Statistics(db.Model):
     player_id = db.Column(db.Text, db.ForeignKey("players.id", ondelete="cascade"))
     team_id = db.Column(db.Text, db.ForeignKey("teams.id", ondelete="cascade"))
     tournament_id = db.Column(db.Text, db.ForeignKey("tournaments.id", ondelete="cascade"))
-    age = db.Column(db.Integer)
     games = db.Column(db.Integer)
     games_started = db.Column(db.Integer)
     minutes_played = db.Column(db.Integer)
@@ -70,9 +70,6 @@ class Statistics(db.Model):
     pf = db.Column(db.Integer)
     points = db.Column(db.Integer)
 
-    player = db.relationship("Players", backref="statistics")
-    team = db.relationship("Teams", backref="statistics")
-    tournament = db.relationship("Tournaments", backref="statistics")
 
 def connect_db(app):
     db.app = app

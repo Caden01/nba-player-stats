@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block title %}Season Stats{% endblock %}
@@ -11,7 +12,7 @@
         <div class="row align-items-center">
             <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Alphabetically
+                    {{ choice }}
                 </button>
                 <ul class="dropdown-menu" style="max-height: 500px; overflow-y: auto;">
                   {% for option in options %}

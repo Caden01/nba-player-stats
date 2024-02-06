@@ -23,10 +23,37 @@ def homepage():
 def season():
     """Show all players with their season stats"""
 
+    options = ["Games", "Points", "Assists", "Rebounds", "Alphabetically"]
     players = Players.query.all()
-    stats = Statistics.query.all()
+    stats = Statistics.query.order_by(Statistics.player_id)
 
-    return render_template("season.html", players=players, stats=stats)
+    return render_template("season.html", players=players, stats=stats, options=options)
+
+@app.route("/season/<option>")
+def order(option):
+    """Orders list by a certain option user picks"""
+
+    options = ["Games", "Points", "Assists", "Rebounds", "Alphabetically"]
+    stats = []
+
+    if option == "Games":
+        choice = "Games"
+        stats = Statistics.query.order_by(Statistics.games.desc())
+    elif option == "Points":
+        choice = "Points"
+        stats = Statistics.query.order_by(Statistics.points.desc())
+    elif option == "Assists":
+        choice = "Assists"
+        stats = Statistics.query.order_by(Statistics.assists.desc())
+    elif option == "Rebounds":
+        choice = "Rebounds"
+        stats = Statistics.query.order_by(Statistics.trb.desc())
+    else:
+        choice = "Alphabetically"
+        stats = Statistics.query.order_by(Statistics.player_id)
+        
+
+    return render_template("order_season.html", stats=stats, options=options, choice=choice)
 
 @app.route("/playoffs")
 def playoffs():

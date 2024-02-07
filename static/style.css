@@ -1,0 +1,12 @@
+.suggestions {
+    position: absolute;
+    color: #fff;
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.list-group-item:hover {
+    cursor: pointer;
+    background-color: #eee;
+}

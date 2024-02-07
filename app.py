@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, request, jsonify
 from models import db, connect_db, Players, Tournaments, Teams, Statistics
 
 app = Flask(__name__)
@@ -96,3 +96,24 @@ def shots(player_id):
 @app.route("/profile")
 def profile():
     return render_template("profile.html")
+
+@app.route("/suggestions")
+def search_suggestions():
+    """Gives information to JS file for search suggesions"""
+
+    players = []
+
+    stats = Statistics.query.order_by(Statistics.player_id)
+    for stat in stats:
+        players.append(stat.players.name)
+
+    return jsonify({"players": players})
+
+@app.route("/search")
+def send_search_value():
+    """Retrieves search input value"""
+
+    value = request.args["val"]
+    print(value)
+
+    return render_template("base.html", value=value)

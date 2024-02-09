@@ -1,13 +1,97 @@
-from flask import Flask, render_template, request, jsonify
-from models import db, connect_db, Players, Tournaments, Teams, Statistics
+from flask import Flask, render_template, request, jsonify, g, session, flash, redirect
+from sqlalchemy.exc import IntegrityError
+from models import db, connect_db, Players, Tournaments, Teams, Statistics, Users, Favorites
+from forms import RegisterForm, LoginForm
+
+CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///capstone" 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
+app.config['SECRET_KEY'] = "asdfjsldf387fqw398"
 
 connect_db(app)
+
+##################################################
+# Signup/login/logout
+
+@app.before_request
+def add_user_to_g():
+    """Add user to Flask global if logged in"""
+
+    if CURR_USER_KEY in session:
+        g.user = Users.query.get(session[CURR_USER_KEY])
+    else:
+        g.user = None
+
+def handle_login(user):
+    """Login user"""
+
+    session[CURR_USER_KEY] = user.id
+
+def handle_logout():
+    """Logout user"""
+
+    if CURR_USER_KEY in session:
+        del session[CURR_USER_KEY]
+
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    """Creates new user and add to DB if form is valid"""
+
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        try:
+            user = Users.signup(
+                username=form.username.data,
+                password=form.password.data,
+                email=form.email.data
+            )
+            db.session.commit()
+
+        except IntegrityError:
+            flash("Username is already take")
+            return render_template("register.html", form=form)
+        
+        handle_login(user)
+        return redirect("/")
+    
+    else:
+        return render_template("register.html", form=form)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """Handles the users login"""
+
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = Users.authenticate(form.username.data, form.password.data)
+
+        if user:
+            handle_login(user)
+            flash("You're logged in")
+            return redirect("/")
+
+        flash("Incorrect username or password")
+    
+    return render_template("login.html", form=form)
+
+@app.route("/logout")
+def logout():
+    """Handle user logging out"""
+
+    handle_logout()
+
+    return redirect("/")
+
+
+########################################################
+# Main routes
 
 @app.route("/")
 def homepage():

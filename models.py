@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
+bcrypt = Bcrypt()
 db = SQLAlchemy()
 
 class Favorites(db.Model):
@@ -23,6 +25,34 @@ class Users(db.Model):
     email = db.Column(db.Text, nullable=False, unique=True)
 
     favorite = db.relationship("Favorites", backref="users", cascade="all, delete")
+
+    @classmethod
+    def signup(cls, username, password, email):
+        """Signup user"""
+
+        hashed_password = bcrypt.generate_password_hash(password).decode("UTF-8")
+
+        user = Users(
+            username=username,
+            password=hashed_password,
+            email=email
+        )
+
+        db.session.add(user)
+        return user
+
+    @classmethod
+    def authenticate(cls, username, password):
+        """Check if username and password match"""
+
+        user = cls.query.filter_by(username=username).first()
+
+        if user:
+            auth = bcrypt.check_password_hash(user.password, password)
+            if auth:
+                return user
+
+        return False
 
 
 

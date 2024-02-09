@@ -2,6 +2,28 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class Favorites(db.Model):
+    """Favorites model"""
+
+    __tablename__ = "favorites"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    player_id = db.Column(db.Text, db.ForeignKey("players.id"))
+
+
+class Users(db.Model):
+    """Users model"""
+     
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.Text, nullable=False, unique=True)
+    password = db.Column(db.Text, nullable=False)
+    email = db.Column(db.Text, nullable=False, unique=True)
+
+    favorite = db.relationship("Favorites", backref="users", cascade="all, delete")
+
 
 
 class Players(db.Model):
@@ -13,7 +35,8 @@ class Players(db.Model):
     name = db.Column(db.Text)
     age = db.Column(db.Integer)
 
-    statistic = db.relationship("Statistics", backref="players")
+    favorite = db.relationship("Favorites", backref="players", cascade="all, delete")
+    statistic = db.relationship("Statistics", backref="players", cascade="all, delete")
 
 class Teams(db.Model):
     """Teams model"""
@@ -23,7 +46,7 @@ class Teams(db.Model):
     id = db.Column(db.Text, primary_key=True, unique=True)
     name = db.Column(db.Text)
 
-    statistic = db.relationship("Statistics", backref="teams")
+    statistic = db.relationship("Statistics", backref="teams", cascade="all, delete")
 
 class Tournaments(db.Model):
     """Tournaments model"""
@@ -33,7 +56,7 @@ class Tournaments(db.Model):
     id = db.Column(db.Text, primary_key=True, unique=True)
     year = db.Column(db.Integer)
 
-    statistic = db.relationship("Statistics", backref="tournaments")
+    statistic = db.relationship("Statistics", backref="tournaments", cascade="all, delete")
 
 class Statistics(db.Model):
     """Statistics model"""

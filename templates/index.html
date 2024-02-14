@@ -12,31 +12,67 @@
         <div class="row align-items-center">
             <div class="col">
                 <h4 class="text-decoration-underline"><a href="" class="text-reset text-decoration-none">Scorers</a></h4>
-                <ul class="list-group list-group-flush" style="height: 200px; overflow-y: auto;">
+                <ul class="list-group list-group-flush" style="height: 70vh; overflow-y: auto;">
                     {% for point in points %}
-                        <li class="list-group-item d-flex justify-content-between"><a href="/player/{{ point.players.id }}" class="text-reset text-decoration-none">{{ point.players.name }}</a><p>{{ point.points }}</p></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex gap-2 align-items-center">
+                                {% if g.user %}
+                                    <form method="POST" action="/{{ point.players.id }}/favorite">
+                                        <button class="btn btn-sm {{ 'btn-primary' if point.players.id in favorites else 'btn-secondary' }}"><span class="material-symbols-outlined">
+                                            star
+                                            </span></button>
+                                    </form>
+                                {% endif %}
+                                <a href="/player/{{ point.players.id }}" class="text-reset text-decoration-none">{{ point.players.name }}</a>
+                            </div>
+                            <p class="mb-0">{{ point.points }}</p>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
             <div class="col">
                 <h4 class="text-decoration-underline"><a href="#" class="text-reset text-decoration-none">Assists</a></h4>
-                <ul class="list-group list-group-flush" style="height: 200px; overflow-y: auto;">
+                <ul class="list-group list-group-flush" style="height: 70vh; overflow-y: auto;">
                     {% for assist in assists %}
-                        <li class="list-group-item d-flex justify-content-between"><a href="/player/{{ assist.players.id }}" class="text-reset text-decoration-none">{{ assist.players.name }}</a><p>{{ assist.assists }}</p></li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <div class="d-flex gap-2 align-items-center">
+                                {% if g.user %}
+                                    <form method="POST" action="/{{ assist.players.id }}/favorite">
+                                        <button class="btn btn-sm"><span class="material-symbols-outlined">
+                                            star
+                                            </span></button>
+                                    </form>
+                                {% endif %}
+                                <a href="/player/{{ assist.players.id }}" class="text-reset text-decoration-none">{{ assist.players.name }}</a>
+                            </div>
+                            <p class="mb-0">{{ assist.assists }}</p>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
             <div class="col">
                 <h4 class="text-decoration-underline"><a href="" class="text-reset text-decoration-none">Rebounders</a></h4>
-                <ul class="list-group list-group-flush" style="height: 200px; overflow-y: auto;">
+                <ul class="list-group list-group-flush" style="height: 70vh; overflow-y: auto;">
                     {% for rebound in rebounds %}
-                        <li class="list-group-item d-flex justify-content-between"><a href="/player/{{ rebound.players.id }}" class="text-reset text-decoration-none">{{ rebound.players.name }}</a><p>{{ rebound.trb }}</p></li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <div class="d-flex gap-2 align-items-center">
+                                {% if g.user %}
+                                    <form method="POST" action="/{{ rebound.players.id }}/favorite">
+                                        <button class="btn btn-sm"><span class="material-symbols-outlined">
+                                            star
+                                            </span></button>
+                                    </form>
+                                {% endif %}
+                                <a href="/player/{{ rebound.players.id }}" class="text-reset text-decoration-none">{{ rebound.players.name }}</a>
+                            </div>
+                            <p class="mb-0">{{ rebound.trb }}</p>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
-
+<!-- 
     <div class="p-3 pb-md-4 mx-auto text-center">
         <h1 class="display-2"><a href="/playoffs" class="text-reset text-decoration-none">Playoffs</a></h1>
     </div>
@@ -75,5 +111,5 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> -->
 {% endblock %}

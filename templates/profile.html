@@ -6,7 +6,7 @@
     <div class="container mt-5">
         <div class="d-flex gap-2 align-items-center">
             <a href="/profile"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" class="rounded-circle" style="width: 300px;" alt="Avatar"></a>
-            <h2>Name</h2>
+            <h2>{{ user.username }}</h2>
         </div>
     </div>
 
@@ -18,11 +18,20 @@
         <div class="row align-items-center">
             <div class="col">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">An item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A second item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A third item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">A fourth item</a></li>
-                    <li class="list-group-item"><a href="#" class="text-reset text-decoration-none">And a fifth one</a></li>
+                    {% for favorite in favorites %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex gap-2 align-items-center">
+                            {% if g.user %}
+                                <form method="POST" action="/{{ favorite.player_id }}/favorite">
+                                    <button class="btn btn-sm {{ 'btn-primary' if favorite.player_id in favorites else 'btn-secondary' }}"><span class="material-symbols-outlined">
+                                        star
+                                        </span></button>
+                                </form>
+                            {% endif %}
+                            <a href="/player/{{ favorite.player_id }}" class="text-reset text-decoration-none">{{ favorite.player_id }}</a>
+                        </div>
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

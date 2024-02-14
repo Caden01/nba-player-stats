@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = "asdfjsldf387fqw398"
 
 connect_db(app)
 
-##################################################
+########################################################
 # Signup/login/logout
 
 @app.before_request
@@ -101,6 +101,11 @@ def homepage():
     assists = db.session.execute(db.select(Statistics).order_by(Statistics.assists.desc())).scalars()
     rebounds = db.session.execute(db.select(Statistics).order_by(Statistics.trb.desc())).scalars()
 
+    if g.user:
+        favorited_player_ids = [player.id for player in g.user.favorite]
+
+        return render_template("index.html", points=points, assists=assists, rebounds=rebounds, favorites=favorited_player_ids)
+
     return render_template("index.html", points=points, assists=assists, rebounds=rebounds)
 
 @app.route("/season")
@@ -179,7 +184,16 @@ def shots(player_id):
 
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    """Show user profile"""
+
+    if not g.user:
+        flash("Access denied", "danger")
+        return redirect("/")
+
+    user = Users.query.get_or_404(g.user.id)
+    favorites = Favorites.query.all()
+
+    return render_template("profile.html", user=user, favorites=favorites)
 
 @app.route("/suggestions")
 def search_suggestions():
@@ -192,6 +206,31 @@ def search_suggestions():
         players.append(stat.players.name)
 
     return jsonify({"players": players})
+
+@app.route("/<player_id>/favorite", methods=["POST"])
+def favorite_player(player_id):
+    """Add player to favorites list"""
+
+    if not g.user:
+        flash("Access denied", "danger")
+        return redirect("/")
+
+    favorited_player = Players.query.get_or_404(player_id)
+    
+    favorites = g.user.favorite
+
+    if favorited_player in favorites:
+        g.user.favorite = [fav for fav in favorites if fav != favorited_player]
+    else:
+        favorite = Favorites(
+            user_id = g.user.id,
+            player_id = favorited_player.id
+        )
+        db.session.add(favorite)
+
+    db.session.commit()
+    
+    return redirect("/")
 
 @app.route("/search")
 def send_search_value():

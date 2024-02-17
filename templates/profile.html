@@ -18,19 +18,21 @@
         <div class="row align-items-center">
             <div class="col">
                 <ul class="list-group list-group-flush">
-                    {% for favorite in favorites %}
+                    {% for player in players %}
+                    {% if player.id in favorites_ids %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-2 align-items-center">
                             {% if g.user %}
-                                <form method="POST" action="/{{ favorite.player_id }}/favorite">
-                                    <button class="btn btn-sm {{ 'btn-primary' if favorite.player_id in favorites else 'btn-secondary' }}"><span class="material-symbols-outlined">
+                                <form method="POST" action="/{{ player.id }}/favorite">
+                                    <button class="btn btn-sm {{ 'btn-primary' if player.id in favorites_ids else 'btn-secondary' }}"><span class="material-symbols-outlined">
                                         star
                                         </span></button>
                                 </form>
                             {% endif %}
-                            <a href="/player/{{ favorite.player_id }}" class="text-reset text-decoration-none">{{ favorite.player_id }}</a>
+                            <a href="/player/{{ player.id }}" class="text-reset text-decoration-none">{{ player.id }}</a>
                         </div>
                     </li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
             </div>

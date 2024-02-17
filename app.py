@@ -102,9 +102,11 @@ def homepage():
     rebounds = db.session.execute(db.select(Statistics).order_by(Statistics.trb.desc())).scalars()
 
     if g.user:
-        favorited_player_ids = [player.id for player in g.user.favorite]
+        favorites = Favorites.query.all()
+        favorites_ids = [fav.player_id for fav in favorites]
+        print(favorites_ids)
 
-        return render_template("index.html", points=points, assists=assists, rebounds=rebounds, favorites=favorited_player_ids)
+        return render_template("index.html", points=points, assists=assists, rebounds=rebounds, favorites=favorites_ids)
 
     return render_template("index.html", points=points, assists=assists, rebounds=rebounds)
 
@@ -191,9 +193,12 @@ def profile():
         return redirect("/")
 
     user = Users.query.get_or_404(g.user.id)
+    players = Players.query.all()
     favorites = Favorites.query.all()
 
-    return render_template("profile.html", user=user, favorites=favorites)
+    favorite_ids = [fav.player_id for fav in favorites]
+
+    return render_template("profile.html", user=user, favorites_ids=favorite_ids, players=players)
 
 @app.route("/suggestions")
 def search_suggestions():
@@ -216,11 +221,13 @@ def favorite_player(player_id):
         return redirect("/")
 
     favorited_player = Players.query.get_or_404(player_id)
+    favorites = Favorites.query.all()
     
-    favorites = g.user.favorite
+    favorites_ids = [fav.player_id for fav in favorites]
 
-    if favorited_player in favorites:
-        g.user.favorite = [fav for fav in favorites if fav != favorited_player]
+    if favorited_player.id in favorites_ids:
+        favorite = Favorites.query.filter_by(player_id=favorited_player.id).first()
+        db.session.delete(favorite)
     else:
         favorite = Favorites(
             user_id = g.user.id,

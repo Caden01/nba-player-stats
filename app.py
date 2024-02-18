@@ -114,11 +114,13 @@ def homepage():
 def season():
     """Show all players with their season stats"""
 
+    favorites = Favorites.query.all()
+    favorites_ids = [fav.player_id for fav in favorites]
     options = ["Games", "Points", "Assists", "Rebounds", "Alphabetically"]
     players = Players.query.all()
     stats = Statistics.query.order_by(Statistics.player_id)
 
-    return render_template("season.html", players=players, stats=stats, options=options)
+    return render_template("season.html", players=players, stats=stats, options=options, favorites_ids=favorites_ids)
 
 @app.route("/season/<option>")
 def order(option):
@@ -126,6 +128,9 @@ def order(option):
 
     options = ["Games", "Points", "Assists", "Rebounds", "Alphabetically"]
     stats = []
+
+    favorites = Favorites.query.all()
+    favorites_ids = [fav.player_id for fav in favorites]
 
     if option == "Games":
         choice = "Games"
@@ -144,7 +149,7 @@ def order(option):
         stats = Statistics.query.order_by(Statistics.player_id)
         
 
-    return render_template("order_season.html", stats=stats, options=options, choice=choice)
+    return render_template("order_season.html", stats=stats, options=options, choice=choice, favorites_ids=favorites_ids)
 
 @app.route("/playoffs")
 def playoffs():
@@ -155,8 +160,10 @@ def players():
     """List of all players"""
 
     players = Players.query.all()
+    favorites = Favorites.query.all()
+    favorites_ids = [fav.player_id for fav in favorites]
 
-    return render_template("players.html", players=players)
+    return render_template("players.html", players=players, favorites_ids=favorites_ids)
 
 @app.route("/player/<player_id>")
 def player(player_id):
@@ -166,8 +173,10 @@ def player(player_id):
     players = Players.query.all()
     tournaments = Tournaments.query.all()
     percent = round(float(player.effect_fg_percent) * 100, 1)
+    favorites = Favorites.query.all()
+    favorites_ids = [fav.player_id for fav in favorites]
 
-    return render_template("player.html", player=player, players=players, tournaments=tournaments, percent=percent)
+    return render_template("player.html", player=player, players=players, tournaments=tournaments, percent=percent, favorites_ids=favorites_ids)
 
 @app.route("/shots/<player_id>")
 def shots(player_id):

@@ -38,7 +38,7 @@
                             <div class="d-flex gap-2 align-items-center">
                                 {% if g.user %}
                                     <form method="POST" action="/{{ assist.players.id }}/favorite">
-                                        <button class="btn btn-sm"><span class="material-symbols-outlined">
+                                        <button class="btn btn-sm {{ 'btn-primary' if assist.players.id in favorites else 'btn-secondary' }}"><span class="material-symbols-outlined">
                                             star
                                             </span></button>
                                     </form>
@@ -58,7 +58,7 @@
                             <div class="d-flex gap-2 align-items-center">
                                 {% if g.user %}
                                     <form method="POST" action="/{{ rebound.players.id }}/favorite">
-                                        <button class="btn btn-sm"><span class="material-symbols-outlined">
+                                        <button class="btn btn-sm {{ 'btn-primary' if rebound.players.id in favorites else 'btn-secondary' }}"><span class="material-symbols-outlined">
                                             star
                                             </span></button>
                                     </form>

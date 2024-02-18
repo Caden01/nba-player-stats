@@ -3,7 +3,14 @@
 {% block title %}Player{% endblock %}
 
 {% block content %}
-    <div class="p-3 pb-md-4 mx-auto text-center">
+    <div class="d-flex gap-2 justify-content-center align-items-center mx-auto text-center">
+          {% if g.user %}
+              <form method="POST" action="/{{ player.players.id }}/favorite">
+                  <button class="btn btn-sm {{ 'btn-primary' if player.players.id in favorites_ids else 'btn-secondary' }}"><span class="material-symbols-outlined">
+                      star
+                      </span></button>
+              </form>
+          {% endif %}
         <h1 class="display-2"><a href="/player" class="text-reset text-decoration-none">{{ player.players.id }}</a></h1>
     </div>
 
@@ -131,7 +138,7 @@
         </div>
     </div>
 
-    <div class="p-3 pb-md-4 mx-auto text-center">
+    <!-- <div class="p-3 pb-md-4 mx-auto text-center">
         <h1 class="display-2"><a href="/season" class="text-reset text-decoration-none">Teams Played For</a></h1>
     </div>
 
@@ -147,5 +154,5 @@
                 </ul>
             </div>
         </div>
-    </div>    
+    </div>     -->
 {% endblock %}

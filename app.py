@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, g, session, flash, redirect
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, Players, Tournaments, Teams, Statistics, Users, Favorites
-from forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm, SearchForm
 
 CURR_USER_KEY = "curr_user"
 
@@ -104,7 +104,6 @@ def homepage():
     if g.user:
         favorites = Favorites.query.all()
         favorites_ids = [fav.player_id for fav in favorites]
-        print(favorites_ids)
 
         return render_template("index.html", points=points, assists=assists, rebounds=rebounds, favorites=favorites_ids)
 
@@ -168,6 +167,11 @@ def players():
 @app.route("/player/<player_id>")
 def player(player_id):
     """Show specif player stats"""
+    
+    form = SearchForm()
+
+    if form.validate_on_submit():
+        return render_template(f"player/{player_id}", form=form)
     
     player =  Statistics.query.filter_by(player_id=player_id).first_or_404()
     players = Players.query.all()
@@ -248,11 +252,22 @@ def favorite_player(player_id):
     
     return redirect("/")
 
-@app.route("/search")
-def send_search_value():
-    """Retrieves search input value"""
+@app.route("/search", methods=["POST"])
+def search():
+    """Search for specific player"""
 
-    value = request.args["val"]
-    print(value)
+    player = request.form.get("search")
+    players = Players.query.all()
+    player_ids = [player.id for player in players]
 
-    return render_template("base.html", value=value)
+    if player not in player_ids:
+        flash("Player not found.")
+        return redirect("/")
+
+    player =  Statistics.query.filter_by(player_id=player).first_or_404()
+    tournaments = Tournaments.query.all()
+    percent = round(float(player.effect_fg_percent) * 100, 1)
+    favorites = Favorites.query.all()
+    favorites_ids = [fav.player_id for fav in favorites]
+
+    return render_template("player.html", player=player, players=players, tournaments=tournaments, percent=percent, favorites_ids=favorites_ids)

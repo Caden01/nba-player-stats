@@ -15,3 +15,8 @@ class LoginForm(FlaskForm):
 
     username = StringField("Username", validators=[InputRequired(), Length(min=3, max=20)])
     password = PasswordField("Password", validators=[InputRequired(), Length(min=6, max=30)])
+
+class SearchForm(FlaskForm):
+    """Form for searching players"""
+
+    player = StringField("Player", validators=[InputRequired()])

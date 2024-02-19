@@ -23,7 +23,8 @@ async function searchSuggestion(evt) {
 
 async function sendSearchValue(evt) {
   val = $search.val();
-  const res = await axios.get(`/player/${val}`);
+  const res = await axios.post(`/player/${val}`);
+  console.log(res);
 }
 
 $search.on("keyup", searchSuggestion);

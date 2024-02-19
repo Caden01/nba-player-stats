@@ -29,9 +29,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/shots/Jalen Green">Shots</a>
             </li>
-            <form class="d-flex gap-2" role="search">
+            <form class="d-flex gap-2 ml-auto p-2 justify-content-end" role="search" action="{{ url_for("search")}}" method="POST">
                 <div class="d-flex flex-column">
-                    <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input id="search-input" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <div class="" >
                         <ul class="suggestions list-group"></ul>
                     </div>

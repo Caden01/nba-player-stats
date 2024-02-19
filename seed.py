@@ -7,7 +7,7 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
-    response = requests.get("https://nba-stats-db.herokuapp.com/api/playerdata/season/2023")
+    response = requests.get("https://nba-stats-db.herokuapp.com/api/playerdata/season/2022")
     results = response.json()["results"]
 
 
